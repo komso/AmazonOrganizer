@@ -1,0 +1,6 @@
+*~
+*.o
+
+# osx noise
+.DS_Store
+profile

@@ -1,0 +1,354 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4DDCA7060ACC9A6100E082CE /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		4DDCA7070ACC9A6100E082CE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		4DDCA7080ACC9A6100E082CE /* rb_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = E8F5E25803AEB7C803A81C6F /* rb_main.rb */; };
+		4DDCA70A0ACC9A6100E082CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		4DDCA70C0ACC9A6100E082CE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		4DDCA70D0ACC9A6100E082CE /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F5E24E03AEB6EC03A81C6F /* RubyCocoa.framework */; };
+		FB1C4188109490FF009E5E3B /* Security.bridgesupport in Resources */ = {isa = PBXBuildFile; fileRef = FB1C4186109490FF009E5E3B /* Security.bridgesupport */; };
+		FB86050110A0568600E6BE04 /* Keychain.h in Headers */ = {isa = PBXBuildFile; fileRef = FB8604FF10A0568600E6BE04 /* Keychain.h */; };
+		FB86050210A0568600E6BE04 /* Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = FB86050010A0568600E6BE04 /* Keychain.m */; };
+		FB86052B10A065EF00E6BE04 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB86052A10A065EF00E6BE04 /* Security.framework */; };
+		FB9A98E3108982BE007BB196 /* amazon_cart.rb in Resources */ = {isa = PBXBuildFile; fileRef = FB9A98E2108982BE007BB196 /* amazon_cart.rb */; };
+		FBB69E2410AEB73E003C1839 /* item_model.rb in Resources */ = {isa = PBXBuildFile; fileRef = FBB69E2310AEB73E003C1839 /* item_model.rb */; };
+		FBB69E2810AEB902003C1839 /* account_database.rb in Resources */ = {isa = PBXBuildFile; fileRef = FBB69E2710AEB902003C1839 /* account_database.rb */; };
+		FBBC5E1D10A66B6F00C88D26 /* keychain.rb in Resources */ = {isa = PBXBuildFile; fileRef = FBBC5E1C10A66B6F00C88D26 /* keychain.rb */; };
+		FBE42DAC1089D6BD008FD88B /* item_view.rb in Resources */ = {isa = PBXBuildFile; fileRef = FBE42DAB1089D6BD008FD88B /* item_view.rb */; };
+		FBF862D710AFEEB900B42913 /* error.rb in Resources */ = {isa = PBXBuildFile; fileRef = FBF862D610AFEEB900B42913 /* error.rb */; };
+		FBF862DB10AFEEDD00B42913 /* account_info.rb in Resources */ = {isa = PBXBuildFile; fileRef = FBF862DA10AFEEDD00B42913 /* account_info.rb */; };
+		FBFB00D81069E800005178CD /* app_controller.rb in Resources */ = {isa = PBXBuildFile; fileRef = FBFB00D71069E800005178CD /* app_controller.rb */; };
+		FBFB00DB1069E837005178CD /* amazon_organizer.rb in Resources */ = {isa = PBXBuildFile; fileRef = FBFB00DA1069E837005178CD /* amazon_organizer.rb */; };
+		FBFB00E31069E84E005178CD /* amazon_organizer in Resources */ = {isa = PBXBuildFile; fileRef = FBFB00DC1069E84E005178CD /* amazon_organizer */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		4DDCA7110ACC9A6100E082CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DDCA7120ACC9A6100E082CE /* AmazonOrganizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmazonOrganizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8F5E24E03AEB6EC03A81C6F /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = /System/Library/Frameworks/RubyCocoa.framework; sourceTree = "<absolute>"; };
+		E8F5E25803AEB7C803A81C6F /* rb_main.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = rb_main.rb; sourceTree = "<group>"; };
+		FB1C4187109490FF009E5E3B /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = English; path = English.lproj/Security.bridgesupport; sourceTree = "<group>"; };
+		FB8604FF10A0568600E6BE04 /* Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keychain.h; sourceTree = "<group>"; };
+		FB86050010A0568600E6BE04 /* Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Keychain.m; sourceTree = "<group>"; };
+		FB86052A10A065EF00E6BE04 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
+		FB9A98E2108982BE007BB196 /* amazon_cart.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = amazon_cart.rb; path = ../lib/amazon_cart.rb; sourceTree = SOURCE_ROOT; };
+		FBB69E2310AEB73E003C1839 /* item_model.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = item_model.rb; path = ../lib/item_model.rb; sourceTree = SOURCE_ROOT; };
+		FBB69E2710AEB902003C1839 /* account_database.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = account_database.rb; path = ../lib/account_database.rb; sourceTree = SOURCE_ROOT; };
+		FBBC5E1C10A66B6F00C88D26 /* keychain.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = keychain.rb; sourceTree = "<group>"; };
+		FBE42DAB1089D6BD008FD88B /* item_view.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = item_view.rb; path = ../lib/item_view.rb; sourceTree = SOURCE_ROOT; };
+		FBF862D610AFEEB900B42913 /* error.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = error.rb; path = ../lib/error.rb; sourceTree = SOURCE_ROOT; };
+		FBF862DA10AFEEDD00B42913 /* account_info.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = account_info.rb; path = ../lib/account_info.rb; sourceTree = SOURCE_ROOT; };
+		FBFB00D71069E800005178CD /* app_controller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = app_controller.rb; path = ../lib/app_controller.rb; sourceTree = SOURCE_ROOT; };
+		FBFB00DA1069E837005178CD /* amazon_organizer.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = amazon_organizer.rb; path = ../lib/amazon_organizer.rb; sourceTree = SOURCE_ROOT; };
+		FBFB00DC1069E84E005178CD /* amazon_organizer */ = {isa = PBXFileReference; explicitFileType = folder; name = amazon_organizer; path = ../lib/amazon_organizer; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4DDCA70B0ACC9A6100E082CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DDCA70C0ACC9A6100E082CE /* Cocoa.framework in Frameworks */,
+				4DDCA70D0ACC9A6100E082CE /* RubyCocoa.framework in Frameworks */,
+				FB86052B10A065EF00E6BE04 /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				FB9A98E2108982BE007BB196 /* amazon_cart.rb */,
+				FB8604FF10A0568600E6BE04 /* Keychain.h */,
+				FBF862D610AFEEB900B42913 /* error.rb */,
+				FBBC5E1C10A66B6F00C88D26 /* keychain.rb */,
+				FB86050010A0568600E6BE04 /* Keychain.m */,
+				FBE42DAB1089D6BD008FD88B /* item_view.rb */,
+				FBB69E2710AEB902003C1839 /* account_database.rb */,
+				FBB69E2310AEB73E003C1839 /* item_model.rb */,
+				FBF862DA10AFEEDD00B42913 /* account_info.rb */,
+				FBFB00D71069E800005178CD /* app_controller.rb */,
+				FBFB00DC1069E84E005178CD /* amazon_organizer */,
+				FBFB00DA1069E837005178CD /* amazon_organizer.rb */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+				E8F5E24E03AEB6EC03A81C6F /* RubyCocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4DDCA7120ACC9A6100E082CE /* AmazonOrganizer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* AmazonOrganizer */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				4DDCA7110ACC9A6100E082CE /* Info.plist */,
+			);
+			name = AmazonOrganizer;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				29B97316FDCFA39411CA2CEA /* main.m */,
+				E8F5E25803AEB7C803A81C6F /* rb_main.rb */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FB1C4186109490FF009E5E3B /* Security.bridgesupport */,
+				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB86052A10A065EF00E6BE04 /* Security.framework */,
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4DDCA7040ACC9A6100E082CE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB86050110A0568600E6BE04 /* Keychain.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4DDCA7030ACC9A6100E082CE /* AmazonOrganizer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4DDCA70E0ACC9A6100E082CE /* Build configuration list for PBXNativeTarget "AmazonOrganizer" */;
+			buildPhases = (
+				4DDCA7040ACC9A6100E082CE /* Headers */,
+				4DDCA7050ACC9A6100E082CE /* Resources */,
+				4DDCA7090ACC9A6100E082CE /* Sources */,
+				4DDCA70B0ACC9A6100E082CE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AmazonOrganizer;
+			productInstallPath = "$(HOME)/Applications";
+			productName = AmazonOrganizer;
+			productReference = 4DDCA7120ACC9A6100E082CE /* AmazonOrganizer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 4D7A7B570ABF745500C2D4C0 /* Build configuration list for PBXProject "AmazonOrganizer" */;
+			compatibilityVersion = "Xcode 3.0";
+			hasScannedForEncodings = 0;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* AmazonOrganizer */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4DDCA7030ACC9A6100E082CE /* AmazonOrganizer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4DDCA7050ACC9A6100E082CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DDCA7060ACC9A6100E082CE /* MainMenu.nib in Resources */,
+				4DDCA7070ACC9A6100E082CE /* InfoPlist.strings in Resources */,
+				4DDCA7080ACC9A6100E082CE /* rb_main.rb in Resources */,
+				FBFB00D81069E800005178CD /* app_controller.rb in Resources */,
+				FBFB00DB1069E837005178CD /* amazon_organizer.rb in Resources */,
+				FBFB00E31069E84E005178CD /* amazon_organizer in Resources */,
+				FB9A98E3108982BE007BB196 /* amazon_cart.rb in Resources */,
+				FBE42DAC1089D6BD008FD88B /* item_view.rb in Resources */,
+				FB1C4188109490FF009E5E3B /* Security.bridgesupport in Resources */,
+				FBBC5E1D10A66B6F00C88D26 /* keychain.rb in Resources */,
+				FBB69E2410AEB73E003C1839 /* item_model.rb in Resources */,
+				FBB69E2810AEB902003C1839 /* account_database.rb in Resources */,
+				FBF862D710AFEEB900B42913 /* error.rb in Resources */,
+				FBF862DB10AFEEDD00B42913 /* account_info.rb in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4DDCA7090ACC9A6100E082CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DDCA70A0ACC9A6100E082CE /* main.m in Sources */,
+				FB86050210A0568600E6BE04 /* Keychain.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29B97319FDCFA39411CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+		FB1C4186109490FF009E5E3B /* Security.bridgesupport */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB1C4187109490FF009E5E3B /* English */,
+			);
+			name = Security.bridgesupport;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4D7A7B580ABF745500C2D4C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = Debug;
+		};
+		4D7A7B590ABF745500C2D4C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = Release;
+		};
+		4DDCA70F0ACC9A6100E082CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = AmazonOrganizer;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		4DDCA7100ACC9A6100E082CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = AmazonOrganizer;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4D7A7B570ABF745500C2D4C0 /* Build configuration list for PBXProject "AmazonOrganizer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D7A7B580ABF745500C2D4C0 /* Debug */,
+				4D7A7B590ABF745500C2D4C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4DDCA70E0ACC9A6100E082CE /* Build configuration list for PBXNativeTarget "AmazonOrganizer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DDCA70F0ACC9A6100E082CE /* Debug */,
+				4DDCA7100ACC9A6100E082CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
