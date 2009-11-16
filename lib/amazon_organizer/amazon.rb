@@ -51,7 +51,7 @@ class AmazonOrganizer::Amazon
     page.saved_items.each {|item| record_item(item, :saved, not_found)}
   end
 
-  def fetch(local_items)
+  def reload(local_items)
     cart = get(URL_SHOPPING_CART)
     not_found = Hash[*local_items.collect {|asin| [asin, 1]}.flatten]
     record_items(cart, not_found)
@@ -61,7 +61,7 @@ class AmazonOrganizer::Amazon
     not_found.keys
   end
 
-  def update(new_states)
+  def submit(new_states)
     # The order of update was choosen to 1) avoid missing any item and 
     # 2) reflect new_states of active items as close as possible
 

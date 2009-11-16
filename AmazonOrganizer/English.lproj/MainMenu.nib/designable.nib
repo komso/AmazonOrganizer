@@ -8,11 +8,11 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="431"/>
 			<integer value="508"/>
-			<integer value="368"/>
-			<integer value="57"/>
 			<integer value="379"/>
+			<integer value="435"/>
+			<integer value="431"/>
+			<integer value="57"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -794,9 +794,9 @@
 							<reference key="NSSuperview" ref="414427165"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="181003774">
-								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Load</string>
+								<string key="NSContents">Reload</string>
 								<object class="NSFont" key="NSSupport" id="1031203740">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">1.300000e+01</double>
@@ -820,7 +820,7 @@
 							<object class="NSButtonCell" key="NSCell" id="583574991">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Save</string>
+								<string key="NSContents">Submit</string>
 								<reference key="NSSupport" ref="1031203740"/>
 								<reference key="NSControlView" ref="581088057"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -1859,14 +1859,6 @@
 					<int key="connectionID">410</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">fetch:</string>
-						<reference key="source" ref="1006526128"/>
-						<reference key="destination" ref="713628603"/>
-					</object>
-					<int key="connectionID">413</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: representedObject.price</string>
 						<reference key="source" ref="1015070248"/>
@@ -2029,14 +2021,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">update:</string>
-						<reference key="source" ref="1006526128"/>
-						<reference key="destination" ref="581088057"/>
-					</object>
-					<int key="connectionID">488</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">terminate:</string>
 						<reference key="source" ref="1006526128"/>
 						<reference key="destination" ref="632727374"/>
@@ -2162,6 +2146,22 @@
 						<reference key="destination" ref="1006526128"/>
 					</object>
 					<int key="connectionID">534</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">reload:</string>
+						<reference key="source" ref="1006526128"/>
+						<reference key="destination" ref="713628603"/>
+					</object>
+					<int key="connectionID">535</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">submit:</string>
+						<reference key="source" ref="1006526128"/>
+						<reference key="destination" ref="581088057"/>
+					</object>
+					<int key="connectionID">536</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3554,7 +3554,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
 					<string>{{525, 802}, {197, 73}}</string>
-					<string>{{21, 802}, {478, 20}}</string>
+					<string>{{358, 783}, {478, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
 					<string>{74, 862}</string>
@@ -3654,7 +3654,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
-					<string>{{33, 599}, {245, 203}}</string>
+					<string>{{370, 580}, {245, 203}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
 					<string>{{23, 794}, {245, 183}}</string>
@@ -3708,7 +3708,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">534</int>
+			<int key="maxID">536</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3716,6 +3716,21 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">AmazonCart</string>
 					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSMutableArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>active_items</string>
+							<string>app</string>
+							<string>saved_items</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../lib/amazon_cart.rb</string>
@@ -3730,17 +3745,15 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>close_account_dialog:</string>
 							<string>configure_account:</string>
-							<string>fetch:</string>
 							<string>move_active_to_saved:</string>
 							<string>move_saved_to_active:</string>
+							<string>reload:</string>
 							<string>set_account_info:</string>
+							<string>submit:</string>
 							<string>terminate:</string>
-							<string>test_objc:</string>
-							<string>update:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>

@@ -51,7 +51,7 @@ class AmazonCart < OSX::NSObject
 
   def reload
     Thread.new do 
-      not_found = amazon.fetch(@items.keys)
+      not_found = amazon.reload(@items.keys)
       not_found.each do |asin|
         delete_item(@items[asin][1])
       end
@@ -59,7 +59,7 @@ class AmazonCart < OSX::NSObject
   end
 
   def submit
-    amazon.update(get_state_to_save)
+    amazon.submit(get_state_to_save)
   end
 
   def add(item, state)

@@ -397,7 +397,7 @@ class TC_AmazonTest < Test::Unit::TestCase
     new_states["4627841426"] = :delete   # saved-1 1st
     new_states["4797347376"] = :delete   # saved-1 1st
 
-    amazon.update(new_states)
+    amazon.submit(new_states)
     expected_form_submissions = [
                                  [saved_list_url(2), {"delete.s1"=>"Delete"}],
                                  [saved_list_url(1), {"delete.s1"=>"Delete"}],
@@ -421,7 +421,7 @@ class TC_AmazonTest < Test::Unit::TestCase
     new_states["4873113563"] = :delete   # active-1 1st
     new_states["4627841426"] = :delete   # saved-1 1st
 
-    amazon.update(new_states)
+    amazon.submit(new_states)
     expected_form_submissions = [
                                  [saved_list_url(1), {"delete.s1"=>"Delete"}],
                                  [active_list_url(1), {"delete.1"=>"Delete"}],
@@ -440,7 +440,7 @@ class TC_AmazonTest < Test::Unit::TestCase
                   4894711370
                   CCC
                   )
-    not_found = amazon.fetch(local_items)
+    not_found = amazon.reload(local_items)
     expected = %w(
                   4627845618:active
                   4894711370:active

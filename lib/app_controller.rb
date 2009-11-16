@@ -34,16 +34,16 @@ class AppController < OSX::NSObject
   attr_reader :cart
   attr_reader :account_database
 
-  ib_action :fetch
+  ib_action :reload
   ib_action :move_active_to_saved
   ib_action :move_saved_to_active
-  ib_action :update
+  ib_action :submit
   ib_action :terminate
   
   ib_outlet :application
   ib_outlet :cart
 
-  def fetch(sender)
+  def reload(sender)
     @cart.reload
   end
 
@@ -55,7 +55,7 @@ class AppController < OSX::NSObject
     move(:active, @cart.saved_items)
   end
 
-  def update(sender)
+  def submit(sender)
     @cart.submit
   end
 
@@ -149,10 +149,10 @@ class AppController < OSX::NSObject
 
   # making all actions error handler 
   # FIXME : should be done automatically
-  error_handler :fetch
+  error_handler :reload
   error_handler :move_active_to_saved
   error_handler :move_saved_to_active
-  error_handler :update
+  error_handler :submit
   error_handler :terminate
   error_handler :configure_account
   error_handler :set_account_info

@@ -200,7 +200,7 @@ class TC_AmazonCartTest < Test::Unit::TestCase
     dummy_amazon = Object.new
     dummy_amazon.instance_variable_set(:@list, @cart)
     dummy_amazon.instance_variable_set(:@items, @items)
-    def dummy_amazon.fetch(list)
+    def dummy_amazon.reload(list)
       @local_items = list.sort
       @list.add(@items[0], :active)
       @list.add(@items[1], :saved)
