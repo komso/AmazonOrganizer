@@ -22,24 +22,9 @@ class TC_AmazonCartTest < Test::Unit::TestCase
     end
   end
 
-  def test_item_model_equal
-    item_model = ItemModel.new
-    item_model.asin = "0"
-    item_model.title = "item0"
-    item_model.price = 0
-    item_model.smallimage = "0.jpg"
-    assert(item_model == @item_models[0])
-    assert(@item_models[0] == item_model)
-  end
-
-  def test_item_initialize
-    item_model = ItemModel.new
-    item_model.copy_item(@items[0])
-    [:asin, :title, :price, :smallimage].each do |name|
-      assert_equal(item_model.send(name), @items[0].send(name))
-    end
-  end
-
+##-------------------
+## Test Modify Lists
+##-------------------
   def test_add
     @cart.add(@items[0], :active)
     assert_equal(["0"], array_values(@cart.active_items_model))
@@ -48,72 +33,6 @@ class TC_AmazonCartTest < Test::Unit::TestCase
 
     assert_equal(["0"], array_values(@cart.active_items_model))
     assert_equal(["1"], array_values(@cart.saved_items_model))
-  end
-
-  def test_save_image
-    @cart.active_items.addObject(@item_models[0])
-    @cart.active_items.addObject(@item_models[1])
-    @cart.saved_items.addObject(@item_models[2])
-    @cart.saved_items.addObject(@item_models[3])
-    save_image = @cart.get_save_image
-    assert_equal(%w(item0 item1), save_image[:active_items].collect{|i| i[:title]})
-    assert_equal(%w(item2 item3), save_image[:saved_items].collect{|i| i[:title]})
-  end
-
-  # FIXME : move this to test_item_model.rb (when it is created)
-  def test_item_save_image
-    assert_equal({:price=>0, :smallimage=>"0.jpg", :asin=>"0", :title=>"item0"}, 
-                 @item_models[0].get_save_image)
-  end
-
-  def test_item_save_image2
-    item_model = ItemModel.new
-    save_image = {:price=>0, :smallimage=>"0.jpg", :asin=>"0", :title=>"item0"}
-    item_model.restore_from_save_image(save_image)
-    
-    [:asin, :title, :price, :smallimage].each do |name|
-      assert_equal(item_model.send(name), save_image[name])
-    end
-  end
-
-  def test_restore_items_from_save_image
-    save_image = [
-      {:price=>0, :smallimage=>"0.jpg", :asin=>"0", :title=>"item0"},
-      {:price=>1, :smallimage=>"1.jpg", :asin=>"1", :title=>"item1"} 
-    ]   
-    @cart.restore_items_from_save_image(:active, save_image)
-    assert_equal(%w(item0 item1), @cart.active_items_model.collect{|i| i.title})
-  end
-
-  def test_restore_from_save_image
-    save_image = {
-      :active_items => [
-                        {:price=>0, :smallimage=>"0.jpg", :asin=>"0", :title=>"item0"},
-                        {:price=>1, :smallimage=>"1.jpg", :asin=>"1", :title=>"item1"} ,
-                       ],
-      :saved_items => [
-                        {:price=>2, :smallimage=>"2.jpg", :asin=>"2", :title=>"item2"},
-                        {:price=>3, :smallimage=>"3.jpg", :asin=>"3", :title=>"item3"},
-                       ]
-    }
-    @cart.restore_from_save_image(save_image)
-    assert_equal(%w(item0 item1), @cart.active_items_model.collect{|i| i.title})
-    assert_equal(%w(item2 item3), @cart.saved_items_model.collect{|i| i.title})
-  end
-
-  def test_item_model_yaml
-    item = ItemModel.new
-    item.asin = "ASIN-dummy"
-    item.title = "title-dummy"
-    item.price = "0"
-    item.smallimage = "smallimage-dummy"
-  end
-
-  def clear_list_and_hash
-    # reset state
-    @cart.active_items.removeObjects(@cart.active_items_model.to_a)
-    @cart.saved_items.removeObjects(@cart.saved_items_model.to_a)
-    @cart.items.clear
   end
 
   def move_test_helper(active, saved, expected)
@@ -188,14 +107,9 @@ class TC_AmazonCartTest < Test::Unit::TestCase
     end
   end
 
-  def test_state_to_save
-    testcase = {"0" => :saved, "1" => :active, "2" => :saved, "3" => :active}
-    testcase.each do |index_string, state|
-      @cart.add_item(state, @item_models[index_string.to_i])
-    end
-    assert_equal(testcase, @cart.get_state_to_save)
-  end
-
+##-------------
+## Test Reload
+##-------------
   def test_select_deleted_items
     @cart.add_item(:active, @item_models[0])    
     @cart.add_item(:saved, @item_models[3])    
@@ -223,4 +137,55 @@ class TC_AmazonCartTest < Test::Unit::TestCase
     end
   end
 
+##-------------
+## Test Submit
+##-------------
+  def test_state_to_save
+    testcase = {"0" => :saved, "1" => :active, "2" => :saved, "3" => :active}
+    testcase.each do |index_string, state|
+      @cart.add_item(state, @item_models[index_string.to_i])
+    end
+    assert_equal(testcase, @cart.get_state_to_save)
+  end
+
+##-----------------
+## Test Save Cache 
+##-----------------
+  def test_save_image
+    @cart.active_items.addObject(@item_models[0])
+    @cart.active_items.addObject(@item_models[1])
+    @cart.saved_items.addObject(@item_models[2])
+    @cart.saved_items.addObject(@item_models[3])
+    save_image = @cart.get_save_image
+    assert_equal(%w(item0 item1), save_image[:active_items].collect{|i| i[:title]})
+    assert_equal(%w(item2 item3), save_image[:saved_items].collect{|i| i[:title]})
+  end
+
+##-----------------
+## Test Load Cache 
+##-----------------
+  def test_restore_items_from_save_image
+    save_image = [
+      {:price=>0, :smallimage=>"0.jpg", :asin=>"0", :title=>"item0"},
+      {:price=>1, :smallimage=>"1.jpg", :asin=>"1", :title=>"item1"} 
+    ]   
+    @cart.restore_items_from_save_image(:active, save_image)
+    assert_equal(%w(item0 item1), @cart.active_items_model.collect{|i| i.title})
+  end
+
+  def test_restore_from_save_image
+    save_image = {
+      :active_items => [
+                        {:price=>0, :smallimage=>"0.jpg", :asin=>"0", :title=>"item0"},
+                        {:price=>1, :smallimage=>"1.jpg", :asin=>"1", :title=>"item1"} ,
+                       ],
+      :saved_items => [
+                        {:price=>2, :smallimage=>"2.jpg", :asin=>"2", :title=>"item2"},
+                        {:price=>3, :smallimage=>"3.jpg", :asin=>"3", :title=>"item3"},
+                       ]
+    }
+    @cart.restore_from_save_image(save_image)
+    assert_equal(%w(item0 item1), @cart.active_items_model.collect{|i| i.title})
+    assert_equal(%w(item2 item3), @cart.saved_items_model.collect{|i| i.title})
+  end
 end

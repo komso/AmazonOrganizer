@@ -121,7 +121,6 @@ class AmazonCart < OSX::NSObject
 ## Save Cache 
 ##------------
   def save_local_cache
-    puts "world!"
     FileUtils.mkdir_p(File.dirname(LOCAL_CACHE_PATH))
     File.open(LOCAL_CACHE_PATH, "w") do |file|
       YAML.dump(get_save_image, file)
