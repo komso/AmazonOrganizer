@@ -1,3 +1,5 @@
+# Tests for AmazonOrganizer::Amazon, Page and Item
+
 require 'test/unit'
 require 'rubygems'
 require 'mocha'
@@ -7,6 +9,7 @@ require 'yaml'
 require 'net/http'
 require 'ostruct'
 
+# Dummy of Mechanize::Form
 class DummyForm
   include Mocha::API
   def initialize(form_node, url)
@@ -26,6 +29,7 @@ class DummyForm
   end
 end
 
+# Dummy of Mechanize::Agent
 class DummyAgent
   include Mocha::API
   
@@ -74,12 +78,19 @@ end
 
 class TC_AmazonTest < Test::Unit::TestCase
   
+##-------------------
+## DummyForm Helper
+##-------------------
+  # collect data submitted from DummyForm
   @@submitted_forms = []
 
   def TC_AmazonTest.submit_form(form)
     @@submitted_forms << form
   end
 
+##-----------
+## Utilities
+##-----------
   def setup
     @@submitted_forms.clear
     @agent = nil
@@ -106,6 +117,16 @@ class TC_AmazonTest < Test::Unit::TestCase
     "/gp/cart/view.html?ie=UTF8&ref=ord_cart%5Fshr&number=#{num}&active=true"
   end
 
+  def setup_amazon(testcase)
+    setup_amazon_stub(testcase)
+    setup_expected_items(testcase)
+    account_info = OpenStruct.new(:account_name => "foo", :password => "bar")
+    AmazonOrganizer::Amazon.new(@list, account_info)
+  end
+
+##-----------------
+## Test Dummy Code
+##-----------------
   def test_dummy
     agent = DummyAgent.new("testcase/01")
     assert_equal("gno_cart.html", agent.saved_html(AmazonOrganizer::Amazon::URL_SHOPPING_CART))
@@ -114,13 +135,20 @@ class TC_AmazonTest < Test::Unit::TestCase
     assert_nil(agent.saved_html(AmazonOrganizer::Amazon::URL_SIGN_IN))
   end
   
-  def setup_amazon(testcase)
-    setup_amazon_stub(testcase)
-    setup_expected_items(testcase)
-    account_info = OpenStruct.new(:account_name => "foo", :password => "bar")
-    AmazonOrganizer::Amazon.new(@list, account_info)
+##-----------------
+## Test Initialize
+##-----------------
+  # Check specified logger is passed to Mechanize::Agent
+  def test_log
+    setup_amazon_stub("testcase/01")
+    logger = Object.new
+    amazon = AmazonOrganizer::Amazon.new(@list, nil, logger)
+    assert_equal(logger, @agent.log)
   end
 
+##---------------
+## Test Sign In
+##---------------
   def test_sign_in
     amazon = setup_amazon("testcase/01")
     assert(! amazon.signed_in?)
@@ -144,14 +172,9 @@ class TC_AmazonTest < Test::Unit::TestCase
     assert(amazon.signed_in?)
   end
 
-  # Check specified logger is passed to Mechanize::Agent
-  def test_log
-    setup_amazon_stub("testcase/01")
-    logger = Object.new
-    amazon = AmazonOrganizer::Amazon.new(@list, nil, logger)
-    assert_equal(logger, @agent.log)
-  end
-
+##-------------------------
+## Test Page Get and Parse
+##-------------------------
   def item_hash_list(list)
     list.collect do |item|
       hash = item.attr.dup
@@ -205,6 +228,72 @@ class TC_AmazonTest < Test::Unit::TestCase
     check_items("saved-1.html", page2)
   end
 
+##-------------
+## Test Reload
+##-------------
+  def test_cart_fetch
+    amazon = setup_amazon("testcase/04")
+    loaded = amazon.reload
+    expected = [
+                  ["4627845618", :active],
+                  ["4894711370", :active],
+                  ["4777513327", :active],
+                  ["4777514625", :active],
+                  ["433902399X", :active],
+                  ["4894717212", :active],
+                  ["4894717239", :active],
+                  ["4777511340", :active],
+                  ["4274066436", :active],
+                  ["4274064611", :active],
+                  ["4894714426", :saved],
+                  ["4627847718", :saved],
+                  ["4274200345", :saved],
+                  ["4627843216", :saved],
+                  ["4254121458", :saved],
+                  ["4627844115", :saved],
+                  ["4873113776", :saved],
+                  ["4789836959", :saved],
+                  ["4320120779", :saved],
+                  ["4798021180", :saved],
+                  ["4873113563", :active],
+                  ["4839931496", :active],
+                  ["4798019437", :active],
+                  ["4798119881", :active],
+                  ["4797340045", :active],
+                  ["4894712857", :active],
+                  ["4798114723", :active],
+                  ["4777512924", :active],
+                  ["479811801X", :active],
+                  ["4797352604", :active],
+                  ["4274066428", :active],
+                  ["4822234304", :active],
+                  ["4863540221", :active],
+                  ["4873113679", :active],
+                  ["4873113946", :active],
+                  ["4797336617", :active],
+                  ["4627841426", :saved],
+                  ["4777513432", :saved],
+                  ["4274065782", :saved],
+                  ["4563015741", :saved],
+                  ["4877831789", :saved],
+                  ["4797344377", :saved],
+                  ["4777510328", :saved],
+                  ["4797346809", :saved],
+                  ["4048673610", :saved],
+                  ["493900791X", :saved],
+                  ["4797347376", :saved],
+                  ["4877832068", :saved],
+                  ["4797341874", :saved],
+                  ["4939007375", :saved],
+                  ["4939007359", :saved],
+                ].sort
+    assert_equal(expected, @list.collect {|pair| [pair[0].asin, pair[1]] }.sort)
+    assert_equal(expected.collect {|pair| pair[0]}.sort, loaded.sort)
+  end
+
+##-------------
+## Test Submit
+##-------------
   def test_cleanup_form
     agent = DummyAgent.new("testcase/03")
     url = "http://www.amazon.co.jp/gp/cart/view.html?ie=UTF8&ref=ord_cart_shr&number=1&active=true"
@@ -248,45 +337,6 @@ class TC_AmazonTest < Test::Unit::TestCase
     end
   end
     
-
-  def test_item
-    expected = {
-      :smallimage=>"http://ecx.images-amazon.com/images/I/513JW1MX18L._SL75_.jpg", 
-      :title=>"Great Beer Guide: The World's 500 Best Beers",
-      :price=>1559
-    }
-
-    response = stub(:body => 
-                    '<html><head></head><body>
-                        <img src="http://ecx.images-amazon.com/images/I/513JW1MX18L._SL75_.jpg">
-                    </body></html>')
-    http = stub(:get => response)
-    Net::HTTP.stubs(:start).yields(http)
-
-    item = AmazonOrganizer::Item.new("0751308137", {:title => expected[:title], :price => expected[:price]})
-    item.fetch_attr
-    assert_equal(expected, item.attr)
-  end
-
-  def test_item2
-    assert_nothing_raised do 
-      expected = {
-        :smallimage=>"", 
-        :title=>"Great Beer Guide: The World's 500 Best Beers",
-        :price=>0
-      }
-      response = stub(:body => 
-                      '<html><head></head><body>
-                      </body></html>')
-      http = stub(:get => response)
-      Net::HTTP.stubs(:start).yields(http)
-      
-      item = AmazonOrganizer::Item.new("0751308137", {:title => expected[:title], :price => expected[:price]})
-      item.fetch_attr
-      assert_equal(expected, item.attr)
-    end
-  end
-
   def test_update_tobuynow
     amazon = setup_amazon("testcase/04")
     page = amazon.get(AmazonOrganizer::Amazon::URL_SHOPPING_CART)
@@ -431,64 +481,45 @@ class TC_AmazonTest < Test::Unit::TestCase
 
   end
 
-  def test_cart_fetch
-    amazon = setup_amazon("testcase/04")
-    loaded = amazon.reload
-    expected = [
-                  ["4627845618", :active],
-                  ["4894711370", :active],
-                  ["4777513327", :active],
-                  ["4777514625", :active],
-                  ["433902399X", :active],
-                  ["4894717212", :active],
-                  ["4894717239", :active],
-                  ["4777511340", :active],
-                  ["4274066436", :active],
-                  ["4274064611", :active],
-                  ["4894714426", :saved],
-                  ["4627847718", :saved],
-                  ["4274200345", :saved],
-                  ["4627843216", :saved],
-                  ["4254121458", :saved],
-                  ["4627844115", :saved],
-                  ["4873113776", :saved],
-                  ["4789836959", :saved],
-                  ["4320120779", :saved],
-                  ["4798021180", :saved],
-                  ["4873113563", :active],
-                  ["4839931496", :active],
-                  ["4798019437", :active],
-                  ["4798119881", :active],
-                  ["4797340045", :active],
-                  ["4894712857", :active],
-                  ["4798114723", :active],
-                  ["4777512924", :active],
-                  ["479811801X", :active],
-                  ["4797352604", :active],
-                  ["4274066428", :active],
-                  ["4822234304", :active],
-                  ["4863540221", :active],
-                  ["4873113679", :active],
-                  ["4873113946", :active],
-                  ["4797336617", :active],
-                  ["4627841426", :saved],
-                  ["4777513432", :saved],
-                  ["4274065782", :saved],
-                  ["4563015741", :saved],
-                  ["4877831789", :saved],
-                  ["4797344377", :saved],
-                  ["4777510328", :saved],
-                  ["4797346809", :saved],
-                  ["4048673610", :saved],
-                  ["493900791X", :saved],
-                  ["4797347376", :saved],
-                  ["4877832068", :saved],
-                  ["4797341874", :saved],
-                  ["4939007375", :saved],
-                  ["4939007359", :saved],
-                ].sort
-    assert_equal(expected, @list.collect {|pair| [pair[0].asin, pair[1]] }.sort)
-    assert_equal(expected.collect {|pair| pair[0]}.sort, loaded.sort)
+##-----------
+## Test Item
+##-----------
+  def test_item
+    expected = {
+      :smallimage=>"http://ecx.images-amazon.com/images/I/513JW1MX18L._SL75_.jpg", 
+      :title=>"Great Beer Guide: The World's 500 Best Beers",
+      :price=>1559
+    }
+
+    response = stub(:body => 
+                    '<html><head></head><body>
+                        <img src="http://ecx.images-amazon.com/images/I/513JW1MX18L._SL75_.jpg">
+                    </body></html>')
+    http = stub(:get => response)
+    Net::HTTP.stubs(:start).yields(http)
+
+    item = AmazonOrganizer::Item.new("0751308137", {:title => expected[:title], :price => expected[:price]})
+    item.fetch_attr
+    assert_equal(expected, item.attr)
+  end
+
+  def test_item2
+    assert_nothing_raised do 
+      expected = {
+        :smallimage=>"", 
+        :title=>"Great Beer Guide: The World's 500 Best Beers",
+        :price=>0
+      }
+      response = stub(:body => 
+                      '<html><head></head><body>
+                      </body></html>')
+      http = stub(:get => response)
+      Net::HTTP.stubs(:start).yields(http)
+      
+      item = AmazonOrganizer::Item.new("0751308137", {:title => expected[:title], :price => expected[:price]})
+      item.fetch_attr
+      assert_equal(expected, item.attr)
+    end
   end
 end
 
