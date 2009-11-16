@@ -41,22 +41,17 @@ class AmazonOrganizer::Amazon
     AmazonOrganizer::Page.new(@agent.get(url))
   end
 
-  def record_item(item, state, found)
-    @list.add(item, state)
-    found << item.asin
-  end
-  
-  def record_items(page, found)
-    page.active_items.each {|item| record_item(item, :active, found)}
-    page.saved_items.each {|item| record_item(item, :saved, found)}
+  def harvest_items(page)
+    page.active_items.each {|item| @list.add(item, :active)}
+    page.saved_items.each {|item| @list.add(item, :saved)}
+    (page.active_items + page.saved_items).collect {|item| item.asin}
   end
 
   def reload
     cart = get(URL_SHOPPING_CART)
-    result = []
-    record_items(cart, result)
+    result = harvest_items(cart)
     (cart.active_list_urls + cart.saved_list_urls).each do |url|
-      record_items(get(url), result)
+      result += harvest_items(get(url))
     end
     result
   end
