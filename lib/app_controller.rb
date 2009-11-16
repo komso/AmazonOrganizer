@@ -44,7 +44,9 @@ class AppController < OSX::NSObject
   ib_outlet :cart
 
   def reload(sender)
-    @cart.reload
+    Thread.start do 
+      @cart.reload
+    end
   end
 
   def move_active_to_saved(sender)

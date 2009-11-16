@@ -50,11 +50,9 @@ class AmazonCart < OSX::NSObject
   end
 
   def reload
-    Thread.new do 
-      not_found = amazon.reload(@items.keys)
-      not_found.each do |asin|
-        delete_item(@items[asin][1])
-      end
+    not_found = amazon.reload(@items.keys)
+    not_found.each do |asin|
+      delete_item(@items[asin][1])
     end
   end
 
