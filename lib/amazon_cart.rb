@@ -6,17 +6,17 @@ require 'fileutils'
 class AmazonCart < OSX::NSObject
   include OSX
 
-  @@instance = nil
-
   attr_reader :items
   attr_accessor :active_items, :saved_items
   ib_outlet :active_items, :saved_items
-  ib_outlet :app
 
   kvc_accessor :active_items_model, :saved_items_model
   
   LOCAL_CACHE_PATH = File.expand_path("~/Library/Application Support/AmazonOrganizer/LocalCache.yaml")
 
+##------------
+## Initialize
+##------------
   def awakeFromNib()
     @amazon = nil
     @active_items_model = NSMutableArray.alloc.init
@@ -49,39 +49,9 @@ class AmazonCart < OSX::NSObject
     @amazon
   end
 
-  def select_deleted_items(found)
-    found_table = Hash[*found.collect {|asin| [asin, 1]}.flatten]
-    @items.keys.select {|asin| !found_table.has_key?(asin)}
-  end
-
-  def reload
-    found = amazon.reload
-    select_deleted_items(found).each do |asin|
-      delete_item(@items[asin][1])
-    end
-  end
-
-  def submit
-    amazon.submit(get_state_to_save)
-  end
-
-  def add(item, state)
-    item_model = nil
-
-    if @items.has_key?(item.asin)
-      item_model = @items[item.asin][1]
-    else
-      item_model = ItemModel.new
-      item_model.asin = item.asin
-    end
-    move_item(state, item_model)
-    item_model.copy_item(item)
-  end
-
-  def get_state_to_save
-    Hash[*items.collect { |asin, pair| [asin, pair[0]] }.flatten]
-  end
-
+##--------------
+## Modify Lists
+##--------------
   def add_item(to, item)
     move_item(to, item)
   end
@@ -107,8 +77,55 @@ class AmazonCart < OSX::NSObject
     end
   end
 
-  def get_items_model_save_image(model_list)
-    model_list.to_a.collect{|item| item.get_save_image}
+##---------
+## Reload
+##---------
+
+  def reload
+    found = amazon.reload
+    select_deleted_items(found).each do |asin|
+      delete_item(@items[asin][1])
+    end
+  end
+
+  def select_deleted_items(found)
+    found_table = Hash[*found.collect {|asin| [asin, 1]}.flatten]
+    @items.keys.select {|asin| !found_table.has_key?(asin)}
+  end
+
+  def add(item, state)
+    item_model = nil
+
+    if @items.has_key?(item.asin)
+      item_model = @items[item.asin][1]
+    else
+      item_model = ItemModel.new
+      item_model.asin = item.asin
+    end
+    move_item(state, item_model)
+    item_model.copy_item(item)
+  end
+
+##---------
+## Submit
+##---------
+  def submit
+    amazon.submit(get_state_to_save)
+  end
+
+  def get_state_to_save
+    Hash[*items.collect { |asin, pair| [asin, pair[0]] }.flatten]
+  end
+
+##------------
+## Save Cache 
+##------------
+  def save_local_cache
+    puts "world!"
+    FileUtils.mkdir_p(File.dirname(LOCAL_CACHE_PATH))
+    File.open(LOCAL_CACHE_PATH, "w") do |file|
+      YAML.dump(get_save_image, file)
+    end
   end
 
   def get_save_image
@@ -118,12 +135,25 @@ class AmazonCart < OSX::NSObject
     result
   end
 
-  def save_local_cache
-    puts "world!"
-    FileUtils.mkdir_p(File.dirname(LOCAL_CACHE_PATH))
-    File.open(LOCAL_CACHE_PATH, "w") do |file|
-      YAML.dump(get_save_image, file)
-    end
+  def get_items_model_save_image(model_list)
+    model_list.to_a.collect{|item| item.get_save_image}
+  end
+
+##------------
+## Load Cache 
+##------------
+  # This method is designed to take argument so that Unit Test can exercise it with various data
+  def restore_from_save_image(save_image)
+    return if save_image.nil?
+    restore_items_from_save_image(:active, save_image[:active_items])
+    restore_items_from_save_image(:saved, save_image[:saved_items])
+  end
+
+  # data passed to restore_from_save_image
+  def load_local_cache
+    return nil unless File.exists?(LOCAL_CACHE_PATH)
+    yaml = File.read(LOCAL_CACHE_PATH)
+    YAML.load(yaml)
   end
 
   def restore_items_from_save_image(list, hash_list)
@@ -134,18 +164,5 @@ class AmazonCart < OSX::NSObject
       item_model.restore_from_save_image(item)
     end
   end
-
-  def restore_from_save_image(save_image)
-    return if save_image.nil?
-    restore_items_from_save_image(:active, save_image[:active_items])
-    restore_items_from_save_image(:saved, save_image[:saved_items])
-  end
-
-  def load_local_cache
-    return nil unless File.exists?(LOCAL_CACHE_PATH)
-    yaml = File.read(LOCAL_CACHE_PATH)
-    YAML.load(yaml)
-  end
-
 end
 
