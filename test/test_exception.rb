@@ -16,7 +16,7 @@ class TC_ExceptionTest < Test::Unit::TestCase
   end
 
   def test_whats_next
-    App.expects(:configure_account)
+    App.expects(:configure_account).with(App)
     err = AccountError.new(@message)
     err.whats_next
   end

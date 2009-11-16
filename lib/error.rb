@@ -77,7 +77,7 @@ class AccountError < AppError
   CONFIGURE_ACCOUNT_INFO = "Please specify your amazon account information in Account Setting window."
 
   def whats_next
-    App.configure_account
+    App.configure_account(App)
   end
 end
 
