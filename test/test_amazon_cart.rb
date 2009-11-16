@@ -196,15 +196,24 @@ class TC_AmazonCartTest < Test::Unit::TestCase
     assert_equal(testcase, @cart.get_state_to_save)
   end
 
+  def test_select_deleted_items
+    @cart.add_item(:active, @item_models[0])    
+    @cart.add_item(:saved, @item_models[3])    
+    assert_equal(["0", "3"], @cart.items.keys.sort)
+    assert_equal(["3"], @cart.select_deleted_items(["0"]))
+    assert_equal(["0", "3"], @cart.select_deleted_items([]).sort)
+    assert_equal(["0", "3"], @cart.select_deleted_items(["2"]).sort)
+    assert_equal([], @cart.select_deleted_items(["0", "1", "2", "3"]).sort)
+  end
+
   def test_fetch
     dummy_amazon = Object.new
     dummy_amazon.instance_variable_set(:@list, @cart)
     dummy_amazon.instance_variable_set(:@items, @items)
-    def dummy_amazon.reload(list)
-      @local_items = list.sort
+    def dummy_amazon.reload
       @list.add(@items[0], :active)
       @list.add(@items[1], :saved)
-      return ["3"]
+      ["0", "1"]
     end
     @cart.instance_variable_set(:@amazon, dummy_amazon)
     @cart.add_item(:active, @item_models[0])    
@@ -212,7 +221,6 @@ class TC_AmazonCartTest < Test::Unit::TestCase
     move_test_helper(["0"], ["1"], {0 => :active, 1 => :saved}) do 
       @cart.reload.join
     end
-    assert_equal(["0", "3"], dummy_amazon.instance_variable_get(:@local_items))
   end
 
 end

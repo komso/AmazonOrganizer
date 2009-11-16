@@ -49,9 +49,14 @@ class AmazonCart < OSX::NSObject
     @amazon
   end
 
+  def select_deleted_items(found)
+    found_table = Hash[*found.collect {|asin| [asin, 1]}.flatten]
+    @items.keys.select {|asin| !found_table.has_key?(asin)}
+  end
+
   def reload
-    not_found = amazon.reload(@items.keys)
-    not_found.each do |asin|
+    found = amazon.reload
+    select_deleted_items(found).each do |asin|
       delete_item(@items[asin][1])
     end
   end

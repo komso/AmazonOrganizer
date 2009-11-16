@@ -433,69 +433,62 @@ class TC_AmazonTest < Test::Unit::TestCase
 
   def test_cart_fetch
     amazon = setup_amazon("testcase/04")
-    local_items = %w(
-                  AAA
-                  4627845618
-                  BBB
-                  4894711370
-                  CCC
-                  )
-    not_found = amazon.reload(local_items)
-    expected = %w(
-                  4627845618:active
-                  4894711370:active
-                  4777513327:active
-                  4777514625:active
-                  433902399X:active
-                  4894717212:active
-                  4894717239:active
-                  4777511340:active
-                  4274066436:active
-                  4274064611:active
-                  4894714426:saved
-                  4627847718:saved
-                  4274200345:saved
-                  4627843216:saved
-                  4254121458:saved
-                  4627844115:saved
-                  4873113776:saved
-                  4789836959:saved
-                  4320120779:saved
-                  4798021180:saved
-                  4873113563:active
-                  4839931496:active
-                  4798019437:active
-                  4798119881:active
-                  4797340045:active
-                  4894712857:active
-                  4798114723:active
-                  4777512924:active
-                  479811801X:active
-                  4797352604:active
-                  4274066428:active
-                  4822234304:active
-                  4863540221:active
-                  4873113679:active
-                  4873113946:active
-                  4797336617:active
-                  4627841426:saved
-                  4777513432:saved
-                  4274065782:saved
-                  4563015741:saved
-                  4877831789:saved
-                  4797344377:saved
-                  4777510328:saved
-                  4797346809:saved
-                  4048673610:saved
-                  493900791X:saved
-                  4797347376:saved
-                  4877832068:saved
-                  4797341874:saved
-                  4939007375:saved
-                  4939007359:saved
-                )
-    assert_equal(expected, @list.collect{|pair| pair[0].asin + ":" + pair[1].to_s})
-    assert_equal(%w(AAA BBB CCC), not_found.sort)
+    loaded = amazon.reload
+    expected = [
+                  ["4627845618", :active],
+                  ["4894711370", :active],
+                  ["4777513327", :active],
+                  ["4777514625", :active],
+                  ["433902399X", :active],
+                  ["4894717212", :active],
+                  ["4894717239", :active],
+                  ["4777511340", :active],
+                  ["4274066436", :active],
+                  ["4274064611", :active],
+                  ["4894714426", :saved],
+                  ["4627847718", :saved],
+                  ["4274200345", :saved],
+                  ["4627843216", :saved],
+                  ["4254121458", :saved],
+                  ["4627844115", :saved],
+                  ["4873113776", :saved],
+                  ["4789836959", :saved],
+                  ["4320120779", :saved],
+                  ["4798021180", :saved],
+                  ["4873113563", :active],
+                  ["4839931496", :active],
+                  ["4798019437", :active],
+                  ["4798119881", :active],
+                  ["4797340045", :active],
+                  ["4894712857", :active],
+                  ["4798114723", :active],
+                  ["4777512924", :active],
+                  ["479811801X", :active],
+                  ["4797352604", :active],
+                  ["4274066428", :active],
+                  ["4822234304", :active],
+                  ["4863540221", :active],
+                  ["4873113679", :active],
+                  ["4873113946", :active],
+                  ["4797336617", :active],
+                  ["4627841426", :saved],
+                  ["4777513432", :saved],
+                  ["4274065782", :saved],
+                  ["4563015741", :saved],
+                  ["4877831789", :saved],
+                  ["4797344377", :saved],
+                  ["4777510328", :saved],
+                  ["4797346809", :saved],
+                  ["4048673610", :saved],
+                  ["493900791X", :saved],
+                  ["4797347376", :saved],
+                  ["4877832068", :saved],
+                  ["4797341874", :saved],
+                  ["4939007375", :saved],
+                  ["4939007359", :saved],
+                ].sort
+    assert_equal(expected, @list.collect {|pair| [pair[0].asin, pair[1]] }.sort)
+    assert_equal(expected.collect {|pair| pair[0]}.sort, loaded.sort)
   end
 end
 

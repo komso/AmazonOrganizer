@@ -41,24 +41,24 @@ class AmazonOrganizer::Amazon
     AmazonOrganizer::Page.new(@agent.get(url))
   end
 
-  def record_item(item, state, not_found)
+  def record_item(item, state, found)
     @list.add(item, state)
-    not_found.delete(item.asin)
+    found << item.asin
   end
   
-  def record_items(page, not_found)
-    page.active_items.each {|item| record_item(item, :active, not_found)}
-    page.saved_items.each {|item| record_item(item, :saved, not_found)}
+  def record_items(page, found)
+    page.active_items.each {|item| record_item(item, :active, found)}
+    page.saved_items.each {|item| record_item(item, :saved, found)}
   end
 
-  def reload(local_items)
+  def reload
     cart = get(URL_SHOPPING_CART)
-    not_found = Hash[*local_items.collect {|asin| [asin, 1]}.flatten]
-    record_items(cart, not_found)
+    result = []
+    record_items(cart, result)
     (cart.active_list_urls + cart.saved_list_urls).each do |url|
-      record_items(get(url), not_found)
+      record_items(get(url), result)
     end
-    not_found.keys
+    result
   end
 
   def submit(new_states)
